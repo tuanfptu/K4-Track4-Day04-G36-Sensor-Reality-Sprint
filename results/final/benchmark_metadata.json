@@ -1,0 +1,33 @@
+{
+  "dataset": "KITTI",
+  "sample_source": "OpenMMLab MMDetection3D demo/data/kitti",
+  "frame_id": "000008",
+  "image_dimensions": [
+    1242,
+    375
+  ],
+  "total_lidar_points": 17238,
+  "baseline_visible_points": 17238,
+  "yaw_protocol_deg": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "coordinate_convention": "LiDAR X forward, Y left, Z up; right-compose Rz(yaw) with original extrinsic independently at every level",
+  "metric_definitions": {
+    "reprojection": "L2 pixel displacement relative to baseline for the same original LiDAR IDs visible in both images",
+    "association": "Baseline point-bbox pairs retained in the same fixed 2D bbox; overlapping boxes counted separately",
+    "out_of_frame": "Baseline-visible point IDs invisible after drift / baseline-visible point IDs",
+    "threshold_exceedance": "Fraction of points visible in both images whose displacement exceeds 5, 10, or 20 px"
+  },
+  "known_limitations": [
+    "single-frame experiment",
+    "MMDetection3D demo point cloud appears camera-FOV filtered",
+    "association metric is bbox-based proxy",
+    "not object ownership verified by 3D ground truth",
+    "no multimodal detector mAP"
+  ],
+  "map_status": "NOT EVALUATED"
+}

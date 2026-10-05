@@ -10,6 +10,38 @@ Camera–LiDAR fusion requires an accurate transform between sensor coordinate s
 
 The pipeline transforms each Velodyne point with `Tr_velo_to_cam`, applies `R0_rect`, then projects into camera 2 with `P2`. It retains positive-depth pixels inside the RGB image and colors them by distance. The exporter checks the matrix composition against the source metadata.
 
+## Final benchmark
+
+The authoritative sprint protocol uses **LiDAR-frame yaw** at 0°, 0.5°, 1°, 1.5°, and 2°. Each run starts from the original extrinsic; `P2`, rectification, image, LiDAR cloud, and fixed camera boxes stay unchanged. Run from the repository root:
+
+```powershell
+python scripts/benchmark.py
+```
+
+This regenerates `results/final/benchmark_summary.csv`, `benchmark_per_object.csv`, `benchmark_metadata.json`, five yaw overlays, the 0°/2° comparison, and three metric plots. Metrics retain original LiDAR point IDs: displacement uses points visible in both projections, and association retention counts baseline point–bbox pairs still inside the same fixed 2D box. Overlapping boxes count separately. **Reprojection displacement relative to baseline** is not independent calibration ground-truth error. Downstream detector mAP is **NOT EVALUATED**; a genuine multimodal fusion detector would be required.
+
+Measured on the bundled KITTI 000008 demo frame (17,238 LiDAR points):
+
+| LiDAR yaw | Median | P90 | Association retention | Association drop | Out of frame |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0° | 0.00 px | 0.00 px | 100.00% | 0.00% | 0.00% |
+| 0.5° | 7.19 px | 9.94 px | 96.56% | 3.44% | 0.58% |
+| 1° | 14.37 px | 19.79 px | 92.90% | 7.10% | 1.19% |
+| 1.5° | 21.53 px | 29.56 px | 89.59% | 10.41% | 1.76% |
+| 2° | 28.68 px | 39.20 px | 86.16% | 13.84% | 2.34% |
+
+This single-frame, camera-FOV-filtered demonstration shows that small extrinsic drift can degrade geometric alignment and fixed-box association while both sensors remain individually operational. Association is a 2D bbox proxy, not verified 3D object ownership.
+
+## Interactive demo
+
+```powershell
+streamlit run app.py
+```
+
+CalibGuard computes yaw projection and metrics live from the original calibration. Suggested 3–5 minute flow: show the 0° baseline; increase yaw gradually; compare the road and vehicle point shift; read median/P90 displacement and association loss; open the fixed benchmark curves; explain why the team-defined health thresholds are **not an automotive safety standard**.
+
+The older `scripts/run_visualization.py` remains available as a separate **camera-frame yaw** teaching demo. Its numbers and `results/visualization/` plots use a different coordinate convention and must not be mixed with the final LiDAR-frame benchmark.
+
 ## Ground truth and association handoff
 
 For frame `000008`, run `python scripts/validate_sample.py` after installing the
