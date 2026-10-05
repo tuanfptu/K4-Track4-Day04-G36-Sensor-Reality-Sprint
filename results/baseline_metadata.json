@@ -1,0 +1,12 @@
+{
+  "dataset": "KITTI",
+  "sample_source": "OpenMMLab MMDetection3D demo/data/kitti",
+  "frame_id": "000008",
+  "image_file": "data\\sample\\image.png",
+  "lidar_file": "data\\sample\\points.bin",
+  "calibration_file": "data\\sample\\calib.txt",
+  "total_lidar_points": 17238,
+  "positive_depth_points": 17238,
+  "projected_inside_image": 17238,
+  "projection_ratio": 1.0
+}
