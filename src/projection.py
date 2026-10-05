@@ -18,3 +18,20 @@ def project(points: np.ndarray, p: np.ndarray, rect: np.ndarray, transform: np.n
     inside &= (pixels[:, 0] >= 0) & (pixels[:, 0] < width)
     inside &= (pixels[:, 1] >= 0) & (pixels[:, 1] < height)
     return pixels[inside], rectified[front, 2][inside], front_count
+
+
+def project_indexed(points: np.ndarray, p: np.ndarray, rect: np.ndarray,
+                    transform: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Project every point, keeping index alignment with `points`.
+
+    Returns pixels (N, 2) and depth (N,); both are NaN where the point is not in front of the camera.
+    Pixels are not clipped to the image so reference/perturbed runs can be compared point by point.
+    """
+    xyz1 = np.column_stack((points[:, :3], np.ones(len(points))))
+    rectified = (rect @ (transform @ xyz1.T)).T
+    depth = rectified[:, 2]
+    front = np.isfinite(rectified).all(axis=1) & (depth > 0)
+    pixels = np.full((len(points), 2), np.nan)
+    projected = (p @ np.column_stack((rectified[front], np.ones(int(front.sum())))).T).T
+    pixels[front] = projected[:, :2] / projected[:, 2:3]
+    return pixels, np.where(front, depth, np.nan)

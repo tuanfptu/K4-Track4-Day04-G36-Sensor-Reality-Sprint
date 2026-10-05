@@ -46,3 +46,8 @@ Các quy ước dưới đây là hướng dẫn diễn giải cho thí nghiệm
 3. **Association:** công bố rõ cách chọn điểm/vật thể, bbox GT, mẫu số và cách xử lý điểm mất khỏi ảnh. Association retention là metric/proxy theo giao thức nhóm; không dùng nó thay cho detection accuracy.
 4. **mAP drop:** chỉ báo khi có detector, confidence, GT, tập đánh giá và evaluator giống nhau cho baseline/corrupted. Overlay hoặc association drop đơn lẻ chưa đo được mAP drop.
 5. **Research pitch:** ba hướng hiệu chỉnh để thảo luận là hình học mặt đất/cạnh (Galibr), correspondence vật thể (CalibRefine), và depth flow (DF-Calib/UniCalib). Phần triển khai sprint đo độ nhạy với drift; việc tái lập thuật toán hiệu chỉnh là bước sau.
+For bbox/label extraction and point count validation, the team checked the
+official MMDetection3D [KITTI info converter](https://github.com/open-mmlab/mmdetection3d/blob/main/tools/dataset_converters/update_infos_to_v2.py),
+[point count code](https://github.com/open-mmlab/mmdetection3d/blob/main/tools/dataset_converters/kitti_converter.py),
+[box operations](https://github.com/open-mmlab/mmdetection3d/blob/main/mmdet3d/structures/ops/box_np_ops.py),
+and [camera box definition](https://github.com/open-mmlab/mmdetection3d/blob/main/mmdet3d/structures/bbox_3d/cam_box3d.py).

@@ -1,25 +1,13 @@
 """Export KITTI text calibration from the trusted MMDetection3D frame 000008 pickle."""
 
 import argparse
-import pickle
+import sys
 from pathlib import Path
 
 import numpy as np
 
-
-class SampleUnpickler(pickle.Unpickler):
-    """Allow only the constructors used by the inspected OpenMMLab sample."""
-
-    ALLOWED = {
-        ("numpy.core.multiarray", "scalar"),
-        ("numpy", "dtype"),
-        ("_codecs", "encode"),
-    }
-
-    def find_class(self, module, name):
-        if (module, name) not in self.ALLOWED:
-            raise pickle.UnpicklingError(f"Unexpected pickle class: {module}.{name}")
-        return super().find_class(module, name)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.data_utils import load_sample_info
 
 
 def matrix(value, shape, name):
@@ -37,8 +25,7 @@ def main():
     parser.add_argument("--input", type=Path, default=root / "data/sample/000008.pkl")
     parser.add_argument("--output", type=Path, default=root / "data/sample/calib.txt")
     args = parser.parse_args()
-    with args.input.open("rb") as stream:
-        sample = SampleUnpickler(stream).load()["data_list"][0]
+    sample = load_sample_info(args.input)
     if sample["sample_id"] != 8:
         raise ValueError("Expected KITTI sample_id 8")
     images = sample["images"]

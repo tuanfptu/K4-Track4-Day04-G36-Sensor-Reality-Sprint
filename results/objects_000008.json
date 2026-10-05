@@ -1,0 +1,369 @@
+{
+  "frame_id": "000008",
+  "label_mapping_source": "MMDetection3D KITTI v2 converter",
+  "bbox_2d_format": "xyxy, continuous pixels",
+  "bbox_3d_format": "x,y,z,l,h,w,rotation_y; rectified camera; bottom center; m,rad",
+  "ignored_label_note": "-1 original class name is not stored; sentinel geometry is consistent with KITTI DontCare",
+  "objects": [
+    {
+      "bbox": [
+        0.0,
+        192.37,
+        402.31,
+        374.0
+      ],
+      "bbox_label": 2,
+      "bbox_3d": [
+        -2.7,
+        1.74,
+        3.68,
+        3.23,
+        1.6,
+        1.57,
+        -1.29
+      ],
+      "bbox_label_3d": 2,
+      "depth": 3.682745933532715,
+      "center_2d": [
+        92.29086303710938,
+        356.9522705078125
+      ],
+      "num_lidar_pts": 1325,
+      "difficulty": -1,
+      "truncated": 0.88,
+      "occluded": 3,
+      "alpha": -0.69,
+      "score": 0.0,
+      "index": 0,
+      "group_id": 0,
+      "object_id": 0,
+      "class_name": "Car",
+      "ignore": false,
+      "valid_3d": true
+    },
+    {
+      "bbox": [
+        334.85,
+        178.94,
+        624.5,
+        372.04
+      ],
+      "bbox_label": 2,
+      "bbox_3d": [
+        -1.17,
+        1.65,
+        7.86,
+        3.68,
+        1.57,
+        1.5,
+        1.9
+      ],
+      "bbox_label_3d": 2,
+      "depth": 7.862746238708496,
+      "center_2d": [
+        507.68450927734375,
+        252.1992950439453
+      ],
+      "num_lidar_pts": 1900,
+      "difficulty": 1,
+      "truncated": 0.0,
+      "occluded": 1,
+      "alpha": 2.04,
+      "score": 0.0,
+      "index": 1,
+      "group_id": 1,
+      "object_id": 1,
+      "class_name": "Car",
+      "ignore": false,
+      "valid_3d": true
+    },
+    {
+      "bbox": [
+        937.29,
+        197.39,
+        1241.0,
+        374.0
+      ],
+      "bbox_label": 2,
+      "bbox_3d": [
+        3.81,
+        1.64,
+        6.15,
+        3.08,
+        1.39,
+        1.44,
+        -1.31
+      ],
+      "bbox_label_3d": 2,
+      "depth": 6.152746200561523,
+      "center_2d": [
+        1063.3797607421875,
+        283.6329650878906
+      ],
+      "num_lidar_pts": 881,
+      "difficulty": -1,
+      "truncated": 0.34,
+      "occluded": 3,
+      "alpha": -1.84,
+      "score": 0.0,
+      "index": 2,
+      "group_id": 2,
+      "object_id": 2,
+      "class_name": "Car",
+      "ignore": false,
+      "valid_3d": true
+    },
+    {
+      "bbox": [
+        597.59,
+        176.18,
+        720.9,
+        261.14
+      ],
+      "bbox_label": 2,
+      "bbox_3d": [
+        1.07,
+        1.55,
+        14.44,
+        3.66,
+        1.47,
+        1.6,
+        -1.25
+      ],
+      "bbox_label_3d": 2,
+      "depth": 14.442745208740234,
+      "center_2d": [
+        666.0049438476562,
+        213.5522918701172
+      ],
+      "num_lidar_pts": 659,
+      "difficulty": 1,
+      "truncated": 0.0,
+      "occluded": 1,
+      "alpha": -1.33,
+      "score": 0.0,
+      "index": 3,
+      "group_id": 3,
+      "object_id": 3,
+      "class_name": "Car",
+      "ignore": false,
+      "valid_3d": true
+    },
+    {
+      "bbox": [
+        741.18,
+        168.83,
+        792.25,
+        208.43
+      ],
+      "bbox_label": 2,
+      "bbox_3d": [
+        7.24,
+        1.55,
+        33.2,
+        4.08,
+        1.7,
+        1.63,
+        1.95
+      ],
+      "bbox_label_3d": 2,
+      "depth": 33.2027473449707,
+      "center_2d": [
+        768.1942749023438,
+        188.05809020996094
+      ],
+      "num_lidar_pts": 55,
+      "difficulty": 1,
+      "truncated": 0.0,
+      "occluded": 0,
+      "alpha": 1.74,
+      "score": 0.0,
+      "index": 4,
+      "group_id": 4,
+      "object_id": 4,
+      "class_name": "Car",
+      "ignore": false,
+      "valid_3d": true
+    },
+    {
+      "bbox": [
+        884.52,
+        178.31,
+        956.41,
+        240.18
+      ],
+      "bbox_label": 2,
+      "bbox_3d": [
+        8.48,
+        1.75,
+        19.96,
+        2.47,
+        1.59,
+        1.59,
+        -1.25
+      ],
+      "bbox_label_3d": 2,
+      "depth": 19.962745666503906,
+      "center_2d": [
+        918.2254028320312,
+        207.35877990722656
+      ],
+      "num_lidar_pts": 162,
+      "difficulty": 0,
+      "truncated": 0.0,
+      "occluded": 0,
+      "alpha": -1.65,
+      "score": 0.0,
+      "index": 5,
+      "group_id": 5,
+      "object_id": 5,
+      "class_name": "Car",
+      "ignore": false,
+      "valid_3d": true
+    },
+    {
+      "bbox": [
+        800.38,
+        163.67,
+        825.45,
+        184.07
+      ],
+      "bbox_label": -1,
+      "bbox_3d": [
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -10.0
+      ],
+      "bbox_label_3d": -1,
+      "depth": -999.9972534179688,
+      "center_2d": [
+        1331.055908203125,
+        894.033203125
+      ],
+      "num_lidar_pts": -1,
+      "difficulty": -1,
+      "truncated": -1.0,
+      "occluded": -1,
+      "alpha": -10.0,
+      "score": 0.0,
+      "index": -1,
+      "group_id": 6,
+      "object_id": 6,
+      "class_name": "Ignore",
+      "ignore": true,
+      "valid_3d": false
+    },
+    {
+      "bbox": [
+        859.58,
+        172.34,
+        886.26,
+        194.51
+      ],
+      "bbox_label": -1,
+      "bbox_3d": [
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -10.0
+      ],
+      "bbox_label_3d": -1,
+      "depth": -999.9972534179688,
+      "center_2d": [
+        1331.055908203125,
+        894.033203125
+      ],
+      "num_lidar_pts": -1,
+      "difficulty": -1,
+      "truncated": -1.0,
+      "occluded": -1,
+      "alpha": -10.0,
+      "score": 0.0,
+      "index": -1,
+      "group_id": 7,
+      "object_id": 7,
+      "class_name": "Ignore",
+      "ignore": true,
+      "valid_3d": false
+    },
+    {
+      "bbox": [
+        801.81,
+        163.96,
+        825.2,
+        183.59
+      ],
+      "bbox_label": -1,
+      "bbox_3d": [
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -10.0
+      ],
+      "bbox_label_3d": -1,
+      "depth": -999.9972534179688,
+      "center_2d": [
+        1331.055908203125,
+        894.033203125
+      ],
+      "num_lidar_pts": -1,
+      "difficulty": -1,
+      "truncated": -1.0,
+      "occluded": -1,
+      "alpha": -10.0,
+      "score": 0.0,
+      "index": -1,
+      "group_id": 8,
+      "object_id": 8,
+      "class_name": "Ignore",
+      "ignore": true,
+      "valid_3d": false
+    },
+    {
+      "bbox": [
+        826.87,
+        162.28,
+        845.84,
+        178.86
+      ],
+      "bbox_label": -1,
+      "bbox_3d": [
+        -1000.0,
+        -1000.0,
+        -1000.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -10.0
+      ],
+      "bbox_label_3d": -1,
+      "depth": -999.9972534179688,
+      "center_2d": [
+        1331.055908203125,
+        894.033203125
+      ],
+      "num_lidar_pts": -1,
+      "difficulty": -1,
+      "truncated": -1.0,
+      "occluded": -1,
+      "alpha": -10.0,
+      "score": 0.0,
+      "index": -1,
+      "group_id": 9,
+      "object_id": 9,
+      "class_name": "Ignore",
+      "ignore": true,
+      "valid_3d": false
+    }
+  ]
+}
