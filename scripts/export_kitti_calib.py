@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.data_utils import load_sample_info
+from src.data_utils import SampleUnpickler, load_sample_info
 
 
 def matrix(value, shape, name):

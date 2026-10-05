@@ -1,5 +1,62 @@
 import numpy as np
 
+from src.data_utils import points_in_bboxes
+
+
+def measure_yaw_drift(reference: dict, corrupted: dict, objects: list[dict]) -> tuple[dict, list[dict]]:
+    """Measure matched original LiDAR rows and fixed 2D-box pair retention.
+
+    Both projections have one row per original point. Displacement uses rows
+    visible in both images; out-of-frame uses all baseline-visible rows.
+    Each bbox contributes its own baseline point IDs, including overlaps.
+    """
+    base_uv, bad_uv = reference["pixels"], corrupted["pixels"]
+    base_visible, bad_visible = reference["in_image"], corrupted["in_image"]
+    if base_uv.shape != bad_uv.shape or base_visible.shape != bad_visible.shape:
+        raise ValueError("Projections must preserve the same point IDs")
+    if not base_visible.any():
+        raise ValueError("No baseline-visible points")
+    common = base_visible & bad_visible
+    shift = np.linalg.norm(bad_uv[common] - base_uv[common], axis=1)
+    if not np.isfinite(shift).all():
+        raise ValueError("Matched projection contains nonfinite displacement")
+    boxes = np.asarray([obj["bbox"] for obj in objects], dtype=float).reshape(-1, 4)
+    before = points_in_bboxes(base_uv, boxes) & base_visible[:, None]
+    after = points_in_bboxes(bad_uv, boxes) & bad_visible[:, None]
+    baseline_pairs = before.sum(axis=0)
+    retained_pairs = (before & after).sum(axis=0)
+    total_pairs = int(baseline_pairs.sum())
+    total_retained = int(retained_pairs.sum())
+    retention = 100 * total_retained / total_pairs if total_pairs else None
+    summary = {
+        "mean_reprojection_px": float(np.mean(shift)) if len(shift) else None,
+        "median_reprojection_px": float(np.median(shift)) if len(shift) else None,
+        "p90_reprojection_px": float(np.percentile(shift, 90)) if len(shift) else None,
+        "max_reprojection_px": float(np.max(shift)) if len(shift) else None,
+        "association_retention_pct": retention,
+        "association_drop_pct": 100 - retention if retention is not None else None,
+        "out_of_frame_pct": 100 * int((base_visible & ~bad_visible).sum()) / int(base_visible.sum()),
+        "gt_5px_pct": 100 * float(np.mean(shift > 5)) if len(shift) else None,
+        "gt_10px_pct": 100 * float(np.mean(shift > 10)) if len(shift) else None,
+        "gt_20px_pct": 100 * float(np.mean(shift > 20)) if len(shift) else None,
+        "baseline_visible_points": int(base_visible.sum()),
+        "matched_visible_points": int(common.sum()),
+        "baseline_associated_pairs": total_pairs,
+        "retained_associated_pairs": total_retained,
+    }
+    per_object = []
+    for j, obj in enumerate(objects):
+        n, kept = int(baseline_pairs[j]), int(retained_pairs[j])
+        rate = 100 * kept / n if n else None
+        per_object.append({
+            "object_id": int(obj["object_id"]), "class": obj["class_name"],
+            "bbox": ",".join(f"{float(value):.2f}" for value in obj["bbox"]),
+            "baseline_associated_points": n, "retained_points": kept,
+            "association_retention_pct": rate,
+            "association_drop_pct": 100 - rate if rate is not None else None,
+        })
+    return summary, per_object
+
 
 def reprojection_displacement(pix_ref: np.ndarray, pix_pert: np.ndarray) -> dict:
     """Per-point pixel displacement between reference and perturbed projections (index-aligned).

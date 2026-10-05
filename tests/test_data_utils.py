@@ -2,6 +2,7 @@
 
 import io
 import pickle
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -115,7 +116,7 @@ class SampleIntegrationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             folder = Path(directory)
             for name in ("000008.pkl", "image.png", "points.bin"):
-                (folder / name).symlink_to(ROOT / "data/sample" / name)
+                shutil.copyfile(ROOT / "data/sample" / name, folder / name)
             lines = (ROOT / "data/sample/calib.txt").read_text().splitlines()
             lines = ["R0_rect: 1 0 0 0 1 0 0 0 1" if line.startswith("R0_rect:") else line for line in lines]
             (folder / "calib.txt").write_text("\n".join(lines))
