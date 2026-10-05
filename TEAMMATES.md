@@ -1,7 +1,7 @@
 # Team Members
 
-1. Hà Mạnh Tuân — Lead — MSSV: TODO
-2. Định — MSSV: TODO
-3. Khánh — MSSV: TODO
-4. Cảnh — MSSV: TODO
-5. Lâm — MSSV: TODO
+1. Hà Mạnh Tuân — Lead — MSSV: 2A202602982
+2. Trần Cao Quốc Định — MSSV: 2A202602939
+3. Lê Trọng Khánh — MSSV: 2A202602941
+4. Đào Quang Cảnh — MSSV: 2A202602542
+5. Đinh Quang Lâm — MSSV: 2A202602875
