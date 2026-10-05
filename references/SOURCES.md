@@ -5,4 +5,4 @@
 - **Calibration source:** `000008.pkl` from the same OpenMMLab demo. It stores `P0`–`P3`, `R0_rect`, `lidar_points.Tr_velo_to_cam`, and `CAM2.lidar2img`. `scripts/export_kitti_calib.py` exports the original unrectified transform and verifies the composition against `CAM2.lidar2img`.
 - **Implementation:** Team G36 baseline projection. No external projection code was copied.
 
-The raw sample files and exported calibration are kept out of Git; [data/README.md](../data/README.md) gives the three-file retrieval commands.
+The four small frame `000008` files are bundled for a reproducible classroom benchmark. They retain the KITTI dataset's CC BY-NC-SA 3.0 terms; see [data/README.md](../data/README.md) for their source and regeneration details.

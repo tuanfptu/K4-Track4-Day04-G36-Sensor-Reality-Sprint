@@ -6,13 +6,13 @@ Camera–LiDAR fusion requires an accurate transform between sensor coordinate s
 
 ## Baseline status
 
-**VERIFIED PASS** with KITTI frame `000008`, distributed as [OpenMMLab MMDetection3D demo data](https://github.com/open-mmlab/mmdetection3d/tree/main/demo/data/kitti). This baseline uses the original calibration without intentionally injected drift.
+**VERIFIED PASS** with bundled KITTI frame `000008`, distributed as [OpenMMLab MMDetection3D demo data](https://github.com/open-mmlab/mmdetection3d/tree/main/demo/data/kitti). Dataset origin: KITTI. Demo sample distribution: OpenMMLab MMDetection3D. Purpose: small reproducible classroom benchmark. Team G36 did not create the KITTI sample. This baseline uses the original calibration without intentionally injected drift.
 
 The pipeline transforms each Velodyne point with `Tr_velo_to_cam`, applies `R0_rect`, then projects into camera 2 with `P2`. It retains positive-depth pixels inside the RGB image and colors them by distance. The exporter checks the matrix composition against the source metadata.
 
 ## Input and output
 
-Inputs: `data/sample/image.png`, `data/sample/points.bin`, `data/sample/calib.txt`. See [data/README.md](data/README.md) for the exact three-file download and calibration export. Outputs: `results/baseline_projection.png` and `results/baseline_metadata.json`.
+Inputs are bundled: `data/sample/image.png`, `data/sample/points.bin`, `data/sample/calib.txt`. The source `data/sample/000008.pkl` is included for calibration provenance. Outputs: `results/baseline_projection.png` and `results/baseline_metadata.json`.
 
 ## Setup (Windows PowerShell)
 
@@ -22,7 +22,7 @@ py -3.10 -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-Download the sample and run `python scripts/export_kitti_calib.py` as shown in [data/README.md](data/README.md). Then run:
+After cloning and installing dependencies, run:
 
 ```powershell
 python scripts/run_baseline.py
@@ -31,7 +31,6 @@ python scripts/run_baseline.py
 On the verification machine, `python` and `py` were unavailable as shell commands. The **exact verified commands** used the Codex bundled Python with NumPy 2.3.5 and Pillow 12.3.0:
 
 ```powershell
-& 'C:\Users\TUAN\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' scripts/export_kitti_calib.py
 & 'C:\Users\TUAN\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' scripts/run_baseline.py
 ```
 
