@@ -10,6 +10,16 @@ Camera–LiDAR fusion requires an accurate transform between sensor coordinate s
 
 The pipeline transforms each Velodyne point with `Tr_velo_to_cam`, applies `R0_rect`, then projects into camera 2 with `P2`. It retains positive-depth pixels inside the RGB image and colors them by distance. The exporter checks the matrix composition against the source metadata.
 
+## Ground truth and association handoff
+
+For frame `000008`, run `python scripts/validate_sample.py` after installing the
+dependencies. This extracts every `.pkl` object and ignored region, checks the
+existing projection against the source matrices, creates
+`results/baseline_bbox.png`, and exports `results/association_000008.npz` with
+point indices and 2D/3D membership arrays. See [Dinh's validation and data
+contract](docs/DINH_VALIDATION.md) for results, metric definitions, and limits.
+Run `python -m unittest discover -s tests -v` for the geometry and frame checks.
+
 ## Input and output
 
 Inputs are bundled: `data/sample/image.png`, `data/sample/points.bin`, `data/sample/calib.txt`. The source `data/sample/000008.pkl` is included for calibration provenance. Outputs: `results/baseline_projection.png` and `results/baseline_metadata.json`.

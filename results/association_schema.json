@@ -1,0 +1,139 @@
+{
+  "frame_id": "000008",
+  "arrays": {
+    "points_lidar": {
+      "shape": [
+        17238,
+        4
+      ],
+      "dtype": "float32"
+    },
+    "point_indices": {
+      "shape": [
+        17238
+      ],
+      "dtype": "int64"
+    },
+    "camera_xyz": {
+      "shape": [
+        17238,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "pixels": {
+      "shape": [
+        17238,
+        2
+      ],
+      "dtype": "float64"
+    },
+    "depth": {
+      "shape": [
+        17238
+      ],
+      "dtype": "float64"
+    },
+    "positive_depth": {
+      "shape": [
+        17238
+      ],
+      "dtype": "bool"
+    },
+    "in_image": {
+      "shape": [
+        17238
+      ],
+      "dtype": "bool"
+    },
+    "object_ids": {
+      "shape": [
+        6
+      ],
+      "dtype": "int64"
+    },
+    "labels": {
+      "shape": [
+        6
+      ],
+      "dtype": "int64"
+    },
+    "boxes_2d": {
+      "shape": [
+        6,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "boxes_3d_camera": {
+      "shape": [
+        6,
+        7
+      ],
+      "dtype": "float64"
+    },
+    "ignore_boxes_2d": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "membership_3d": {
+      "shape": [
+        17238,
+        6
+      ],
+      "dtype": "bool"
+    },
+    "candidate_2d": {
+      "shape": [
+        17238,
+        6
+      ],
+      "dtype": "bool"
+    },
+    "in_ignore_region": {
+      "shape": [
+        17238
+      ],
+      "dtype": "bool"
+    },
+    "ambiguous_3d": {
+      "shape": [
+        17238
+      ],
+      "dtype": "bool"
+    },
+    "metric_eligible": {
+      "shape": [
+        17238
+      ],
+      "dtype": "bool"
+    },
+    "reference_object_id": {
+      "shape": [
+        17238
+      ],
+      "dtype": "int64"
+    },
+    "membership_kitti_lidar": {
+      "shape": [
+        17238,
+        6
+      ],
+      "dtype": "bool"
+    }
+  },
+  "reference": "3D cuboid membership; geometric proxy, not point-level semantic ground truth",
+  "source_count_reference": "membership_kitti_lidar reproduces upright LiDAR boxes used by the converter; diagnostics use membership_3d in camera coordinates",
+  "point_order": "Original points.bin row order; point_indices are zero-based",
+  "column_order": "object_ids; six valid Car boxes; excludes all label=-1 rows",
+  "eligibility": "in_image AND NOT in_ignore_region AND NOT ambiguous_3d; background retained for false positives",
+  "reference_id_values": {
+    "-1": "background",
+    "-2": "multiple 3D boxes; excluded from metrics"
+  },
+  "bbox_membership": "2D left/top inclusive, right/bottom exclusive; 3D inclusive faces with 1e-7m tolerance",
+  "metric": "Per-object 2D point retrieval versus 3D geometric membership; precision=TP/(TP+FP), recall=TP/(TP+FN); undefined=null"
+}
