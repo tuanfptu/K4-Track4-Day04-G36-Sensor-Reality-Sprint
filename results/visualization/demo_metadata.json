@@ -1,0 +1,39 @@
+{
+  "frame_id": "000008",
+  "dataset": "KITTI",
+  "sample_source": "OpenMMLab MMDetection3D demo/data/kitti",
+  "total_lidar_points": 17238,
+  "valid_2d_boxes": 6,
+  "yaw_deg": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0
+  ],
+  "selected_overlay_yaw_deg": 2.0,
+  "perturbation": "T_corrupt = R_y_camera(yaw) @ T_original; P2 and R0_rect fixed",
+  "camera_axes": "x right, y down, z forward; rotation before rectification",
+  "error_definition": "L2 pixel displacement vs baseline, same row IDs visible in both images",
+  "association_definition": "retained baseline point-box pairs / baseline point-box pairs; fixed 2D boxes",
+  "association_drop_definition": "100 * (1 - association_retention), percentage points",
+  "map": null,
+  "map_status": "not evaluated; no detector predictions or evaluation set",
+  "limits": [
+    "Single demo frame, not a dataset benchmark",
+    "Point cloud is prefiltered to camera FOV",
+    "Pixel displacement is not independent ground-truth reprojection error",
+    "2D bbox membership is an association proxy, not 3D object ownership",
+    "Viewer draws at most 3500 fixed sampled point IDs; metrics use full cloud"
+  ],
+  "input_sha256": {
+    "data/sample/image.png": "5b988d2a04d51850610b38ce50a66fd4027f3f5e645e5f2198d0522f4cf9a640",
+    "data/sample/points.bin": "3b9de6cc966534900f6a1bdc93b21772e47a334eb2ef18082021956520d902d1",
+    "data/sample/calib.txt": "f581eb1efa7b45da56ad0b66904ac2b8433c61fbf6bc9904b579524b050c0357",
+    "data/sample/000008.pkl": "b187a5f9185789125e04618645ecfb7c5e9afb5d41ab11b06b9a0cf381f0c45a"
+  }
+}
