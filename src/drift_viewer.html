@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G36 · Calibration drift impact</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1120;--panel:#121c2d;--line:#2a374c;--text:#edf3fc;--muted:#a8b8ce;--cyan:#24d3ee;--orange:#ff835c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,sans-serif}main{max-width:1340px;margin:auto;padding:36px 28px 28px}h1{font-size:clamp(28px,4vw,42px);line-height:1.2;letter-spacing:-1px;margin:8px 0 12px}h2{font-size:18px;margin:0 0 10px}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan)}.intro{color:var(--muted);max-width:920px;margin:0 0 24px}.tag{border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:12px;margin-left:12px;color:var(--muted);letter-spacing:0;text-transform:none}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}.metric,.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px}.metric{padding:16px 20px}.metric small{display:block;color:var(--muted)}.metric strong{display:block;font-size:28px;font-weight:600;margin-top:4px}.metric em{font-size:12px;font-style:normal;color:var(--muted)}.panel{padding:22px;margin-bottom:18px}.controls{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.slider{flex:1;min-width:240px;max-width:520px}.slider label{display:flex;justify-content:space-between;gap:20px}.slider output{color:var(--orange);font-weight:650;font-variant-numeric:tabular-nums}.slider input{width:100%;accent-color:var(--orange);margin:14px 0 4px;cursor:pointer}.ticks{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.modes{display:flex;gap:5px;background:var(--bg);border:1px solid var(--line);padding:4px;border-radius:7px}button{font:inherit;border:0;color:var(--muted);background:transparent;padding:7px 13px;border-radius:4px;cursor:pointer}button[aria-pressed=true]{background:#30435c;color:white}button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.options{display:flex;gap:18px;color:var(--muted);font-size:13px}.options input{accent-color:var(--cyan)}.legend{display:flex;align-items:center;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:18px 0 10px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.cyan{background:var(--cyan)}.orange{background:var(--orange)}.box{display:inline-block;width:11px;height:9px;border:1px solid white;margin-right:6px}.views{display:grid;gap:12px}.views.split{grid-template-columns:1fr 1fr}.canvas-label{font-size:12px;color:var(--muted);margin-bottom:5px}canvas{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:5px;background:#080d16}.hidden{display:none}.footnote{font-size:12px;color:var(--muted);margin:12px 0 0}.chart{display:block;width:100%;height:auto;background:white;border-radius:5px}.protocol{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}.protocol p{color:var(--muted);font-size:13px;margin:6px 0}.protocol b{font-size:14px}.footer{font-size:12px;color:var(--muted);margin:20px 0}a{color:var(--cyan)}@media(max-width:750px){main{padding:24px 14px}.metrics{grid-template-columns:1fr 1fr}.metric{padding:12px}.metric strong{font-size:23px}.panel{padding:15px}.views.split,.protocol{grid-template-columns:1fr}.tag{display:block;width:max-content;margin:8px 0}.options{flex-wrap:wrap}}
+</style>
+</head>
+<body><main>
+<div class="eyebrow">G36 / Sensor Reality Sprint <span class="tag">KITTI · frame 000008 · demo một frame</span></div>
+<h1>Calibration drift impact</h1>
+<p class="intro">Một thay đổi nhỏ trong góc camera–LiDAR có thể làm điểm chiếu lệch khỏi vật thể. Kéo thanh yaw để so sánh calibration gốc với calibration bị nhiễu và xem các chỉ số đo trên cùng tập điểm.</p>
+<div class="metrics" aria-live="polite">
+<div class="metric"><small>Median displacement</small><strong id="median">—</strong><em id="p90">P90 —</em></div>
+<div class="metric"><small>Association retention</small><strong id="retention">—</strong><em id="drop">Giảm — điểm phần trăm</em></div>
+<div class="metric"><small>Điểm còn trong ảnh</small><strong id="visible">—</strong><em id="visibility-note">—</em></div>
+<div class="metric"><small>Detector mAP</small><strong style="font-size:22px">Chưa đánh giá</strong><em>Cần detector + evaluation set</em></div>
+</div>
+<section class="panel" aria-label="So sánh projection">
+<div class="controls">
+<div class="slider"><label for="yaw">Yaw quanh trục camera +Y <output id="yaw-value" for="yaw">0.00°</output></label><input id="yaw" type="range" min="0" max="8" step="1" value="0" aria-valuetext="0 độ"><div class="ticks"><span id="min-yaw">0°</span><span>Calibration drift</span><span id="max-yaw">2°</span></div></div>
+<div><div class="modes" aria-label="Chế độ so sánh"><button id="overlay-mode" aria-pressed="true">Chồng lớp</button><button id="split-mode" aria-pressed="false">Cạnh nhau</button></div><div class="options"><label><input type="checkbox" id="boxes" checked> Bbox cố định</label><label><input type="checkbox" id="vectors">Vector dịch chuyển</label></div></div>
+</div>
+<div class="legend"><span><i class="dot cyan"></i>Baseline</span><span><i class="dot orange"></i>Corrupted</span><span><i class="box"></i>2D bbox từ sample metadata</span></div>
+<div class="views" id="views"><div><div class="canvas-label" id="left-label">Baseline + corrupted</div><canvas id="left" aria-label="Baseline và corrupted projection"></canvas></div><div id="right-view" class="hidden"><div class="canvas-label">Corrupted calibration</div><canvas id="right" aria-label="Corrupted projection"></canvas></div></div>
+<p class="footnote" id="sampling">—</p>
+</section>
+<section class="panel"><h2>Ảnh hưởng theo mức drift</h2><img class="chart" src="data:image/png;base64,__PLOT_DATA__" alt="Biểu đồ median/P90 displacement, association retention và association drop theo yaw"><p class="footnote">Các chỉ số được tính trên toàn bộ point cloud. Error chỉ dùng các point ID còn trong ảnh ở cả hai calibration; điểm rơi khỏi ảnh được tính riêng và làm giảm association retention.</p></section>
+<section class="panel protocol"><div><b>Displacement so với baseline</b><p>Khoảng cách pixel giữa hai projection của cùng một điểm LiDAR. Đây là độ lệch do drift, chưa phải sai số so với correspondence ground truth độc lập.</p></div><div><b>Association proxy</b><p>Tỷ lệ cặp điểm–bbox ở baseline còn nằm trong cùng bbox sau drift. Bbox giữ cố định; bbox chồng nhau được đếm riêng. Chỉ số này không xác nhận điểm thuộc vật thể trong 3D.</p></div><div><b>Protocol minh họa</b><p>Giữ P2 và R0_rect cố định; xoay extrinsic gốc quanh +Y của camera trước rectification. Đây là camera yaw cho demo; nhóm cần thống nhất frame trước benchmark chính thức.</p></div></section>
+<div class="footer">Dữ liệu: KITTI, phân phối qua OpenMMLab MMDetection3D · CC BY-NC-SA 3.0. Triển khai: Team G36. Research và nguồn chi tiết trong references/SOURCES.md.</div>
+</main>
+<script id="demo-data" type="application/json">__DEMO_DATA__</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('demo-data').textContent);
+const image=new Image();
+const el=id=>document.getElementById(id);
+const left=el('left'),right=el('right'),slider=el('yaw');
+let split=false;
+for(const canvas of [left,right]){canvas.width=data.width;canvas.height=data.height;}
+slider.max=data.frames.length-1;
+el('min-yaw').textContent=data.frames[0].yaw_deg+'°';
+el('max-yaw').textContent=data.frames[data.frames.length-1].yaw_deg+'°';
+const valid=p=>p!==null&&p[0]>=0&&p[0]<data.width&&p[1]>=0&&p[1]<data.height;
+const fmt=(value,digits=2)=>value===null||value===undefined?'N/A':Number(value).toFixed(digits);
+function dots(ctx,pixels,color){ctx.fillStyle=color;for(const p of pixels){if(valid(p)){ctx.beginPath();ctx.arc(p[0],p[1],1.3,0,2*Math.PI);ctx.fill();}}}
+function boxes(ctx){if(!el('boxes').checked)return;ctx.strokeStyle='#ffffff';ctx.lineWidth=1.5;data.boxes.forEach((b,i)=>{ctx.strokeRect(b[0],b[1],b[2]-b[0],b[3]-b[1]);ctx.font='13px system-ui';ctx.fillStyle='#ffffff';ctx.fillText('bbox '+(i+1),b[0]+4,Math.max(15,b[1]-5));});}
+function vectors(ctx,pixels){if(!el('vectors').checked)return;ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=.8;for(let i=0;i<pixels.length;i+=Math.max(1,Math.floor(pixels.length/100))){const a=data.baseline[i],b=pixels[i];if(valid(a)&&valid(b)){ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}}}
+function render(){
+ if(!image.complete||!image.naturalWidth)return;
+ const frame=data.frames[Number(slider.value)],m=frame.metrics;
+ el('yaw-value').textContent=frame.yaw_deg.toFixed(2)+'°';slider.setAttribute('aria-valuetext',frame.yaw_deg+' độ');
+ el('median').textContent=fmt(m.median_error_px)+' px';el('p90').textContent='P90 '+fmt(m.p90_error_px)+' px';
+ el('retention').textContent=m.association_retention===null?'N/A':fmt(100*m.association_retention)+'%';
+ el('drop').textContent='Giảm '+fmt(m.association_drop_pp)+' điểm phần trăm';
+ el('visible').textContent=Number(m.corrupted_visible).toLocaleString('vi-VN');
+ el('visibility-note').textContent='Baseline '+Number(m.baseline_visible).toLocaleString('vi-VN')+' · chung '+Number(m.matched_visible).toLocaleString('vi-VN');
+ el('sampling').textContent='Hiển thị '+data.display_count.toLocaleString('vi-VN')+' / '+data.point_count.toLocaleString('vi-VN')+' điểm, lấy mẫu cố định theo point ID để dễ quan sát. Metric dùng toàn bộ điểm. '+m.retained_associations.toLocaleString('vi-VN')+' / '+m.baseline_associations.toLocaleString('vi-VN')+' cặp điểm–bbox được giữ lại.';
+ const l=left.getContext('2d'),r=right.getContext('2d');l.drawImage(image,0,0);r.drawImage(image,0,0);
+ dots(l,data.baseline,'#24d3ee');
+ if(split){dots(r,frame.pixels,'#ff835c');boxes(l);boxes(r);vectors(r,frame.pixels);}else{dots(l,frame.pixels,'#ff835c');boxes(l);vectors(l,frame.pixels);}
+}
+function mode(value){split=value;el('views').classList.toggle('split',split);el('right-view').classList.toggle('hidden',!split);el('left-label').textContent=split?'Baseline calibration':'Baseline + corrupted';el('overlay-mode').setAttribute('aria-pressed',String(!split));el('split-mode').setAttribute('aria-pressed',String(split));render();}
+slider.addEventListener('input',render);el('boxes').addEventListener('change',render);el('vectors').addEventListener('change',render);
+el('overlay-mode').addEventListener('click',()=>mode(false));el('split-mode').addEventListener('click',()=>mode(true));
+image.onload=render;image.src='data:image/jpeg;base64,__IMAGE_DATA__';
+</script>
+</body></html>
