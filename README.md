@@ -14,6 +14,59 @@ The pipeline transforms each Velodyne point with `Tr_velo_to_cam`, applies `R0_r
 
 Inputs are bundled: `data/sample/image.png`, `data/sample/points.bin`, `data/sample/calib.txt`. The source `data/sample/000008.pkl` is included for calibration provenance. Outputs: `results/baseline_projection.png` and `results/baseline_metadata.json`.
 
+## Mô phỏng sai lệch hiệu chuẩn ngoại tại (yaw)
+
+Module `src/perturbation.py` cung cấp hàm `perturb_extrinsic(transform, yaw_deg=0.0)`
+để mô phỏng sai lệch góc yaw của ma trận biến đổi từ LiDAR sang camera.
+Đầu vào là ma trận `Tr_velo_to_cam` gốc kích thước 3×4; đầu ra là một ma trận
+3×4 mới, có kiểu dữ liệu `float64`. Hàm không sửa đổi ma trận đầu vào.
+
+Phép quay được định nghĩa trong **hệ tọa độ LiDAR**: X hướng về phía trước,
+Y hướng sang trái, Z hướng lên trên. Yaw quay quanh trục Z của LiDAR theo
+quy tắc bàn tay phải: góc dương quay trục X về phía trục Y. Tâm quay là
+gốc tọa độ LiDAR.
+
+Khi biểu diễn bằng ma trận đồng nhất 4×4, thứ tự kết hợp là
+`T_drift = T_original @ delta_T_lidar`. Do đó,
+`R_drift = R_original @ Rz(yaw)` và cột tịnh tiến được giữ nguyên.
+Đây là phép chủ động thêm sai lệch vào ma trận biến đổi; để đảo ngược sai lệch,
+áp dụng góc yaw đối dấu. Phép quay này dùng trục Z của LiDAR;
+các ma trận nội tại `P2` và hiệu chỉnh `R0_rect` được giữ nguyên.
+
+```python
+from pathlib import Path
+from src.calibration import load_calibration
+from src.perturbation import perturb_extrinsic
+
+p, rect, transform = load_calibration(Path("data/sample/calib.txt"))
+drifted_transform = perturb_extrinsic(transform, yaw_deg=2.0)
+# Dùng drifted_transform thay cho transform khi gọi hàm project.
+```
+
+Các mức yaw đề xuất cho thí nghiệm: **0°, 0.5°, 1°, 1.5°, 2°**.
+Mỗi lần gọi hàm cần dùng ma trận gốc để tránh cộng dồn sai lệch giữa các mức.
+Tham số `yaw_deg` có đơn vị là độ; hàm hỗ trợ mọi góc vô hướng hữu hạn.
+Các trường hợp kiểm thử ±90° giúp kiểm tra rõ trục quay và dấu của góc;
+chúng không phải mức sai lệch dùng trong benchmark 0–2°.
+
+Pitch và tịnh tiến là các phần mở rộng tùy chọn, hiện chưa được triển khai.
+Phạm vi của module là tạo ma trận bị lệch; việc tính metric và chạy benchmark
+do pipeline thí nghiệm đảm nhiệm.
+
+Bộ kiểm thử trong `tests/test_perturbation.py` kiểm tra góc 0°, trục và dấu
+của phép quay, thứ tự nhân ma trận, tính trực giao của ma trận quay, cột
+tịnh tiến, việc giữ nguyên đầu vào và xử lý dữ liệu không hợp lệ.
+Các kiểm thử tích hợp với KITTI xác nhận yaw 0° tái tạo phép chiếu baseline
+và yaw 2° làm thay đổi vị trí pixel khi giữ nguyên nội tại và hiệu chỉnh.
+
+Chạy kiểm thử từ thư mục gốc của dự án bằng lệnh dưới đây.
+Chỉ cần các thư viện hiện có trong `requirements.txt`; không cần cài thêm
+thư viện kiểm thử:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
 ## Setup (Windows PowerShell)
 
 ```powershell
