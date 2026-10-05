@@ -1,0 +1,207 @@
+{
+  "frame_id": "000008",
+  "status": "PASS",
+  "checks": {
+    "rectified_transform_matches_source": true,
+    "projection_matrix_matches_source": true,
+    "source_visibility_mask_matches": true,
+    "source_pixel_error_below_0_001px": true,
+    "baseline_pixels_match": true,
+    "baseline_depth_matches": true,
+    "baseline_front_count_matches": true,
+    "object_0_center_matches": true,
+    "object_0_corners_in_front": true,
+    "object_0_source_point_count_matches": true,
+    "object_1_center_matches": true,
+    "object_1_corners_in_front": true,
+    "object_1_source_point_count_matches": true,
+    "object_2_center_matches": true,
+    "object_2_corners_in_front": true,
+    "object_2_source_point_count_matches": true,
+    "object_3_center_matches": true,
+    "object_3_corners_in_front": true,
+    "object_3_source_point_count_matches": true,
+    "object_4_center_matches": true,
+    "object_4_corners_in_front": true,
+    "object_4_source_point_count_matches": true,
+    "object_5_center_matches": true,
+    "object_5_corners_in_front": true,
+    "object_5_source_point_count_matches": true,
+    "negative_control_omit_rectification_detected": true,
+    "negative_control_double_rectification_detected": true
+  },
+  "input_sha256": {
+    "000008.pkl": "b187a5f9185789125e04618645ecfb7c5e9afb5d41ab11b06b9a0cf381f0c45a",
+    "image.png": "5b988d2a04d51850610b38ce50a66fd4027f3f5e645e5f2198d0522f4cf9a640",
+    "points.bin": "3b9de6cc966534900f6a1bdc93b21772e47a334eb2ef18082021956520d902d1",
+    "calib.txt": "ab473731b48f9c063c7c5731c884c2f571070b230d1e7c164035164dfe5462f5"
+  },
+  "environment": {
+    "python": "3.10.12",
+    "numpy": "2.2.6",
+    "pillow": "12.2.0"
+  },
+  "image_size": [
+    1242,
+    375
+  ],
+  "total_points": 17238,
+  "positive_depth": 17238,
+  "inside_image": 17238,
+  "projection_ratio": 1.0,
+  "annotations": 10,
+  "valid_objects": 6,
+  "ignored_regions": 4,
+  "source_matrix_max_abs_error": 2.0872126810900227e-05,
+  "source_pixel_max_error": 1.7026203460693198e-05,
+  "baseline_pixel_max_error": 6.821210263296962e-13,
+  "ignored_points": 34,
+  "ambiguous_3d_points": 0,
+  "metric_eligible_points": 17204,
+  "overlapping_2d_candidates": 1125,
+  "negative_controls": {
+    "omit_rectification": {
+      "mean_pixel_error": 7.18799135164191,
+      "max_pixel_error": 13.613744290601097
+    },
+    "double_rectification": {
+      "mean_pixel_error": 7.174057054132783,
+      "max_pixel_error": 13.431569214494452
+    }
+  },
+  "objects": [
+    {
+      "object_id": 0,
+      "points_in_3d": 1424,
+      "points_in_2d": 3163,
+      "tp": 1412,
+      "fp": 1751,
+      "fn": 12,
+      "precision": 0.4464116345241859,
+      "recall": 0.9915730337078652,
+      "source_num_lidar_pts": 1325,
+      "recomputed_kitti_lidar_points": 1325,
+      "center_error_px": 2.390668173735151e-05,
+      "depth_error_m": 4.95327148186675e-08,
+      "projected_bbox": [
+        0.0,
+        191.3346280888893,
+        402.6967273731604,
+        375.0
+      ],
+      "projected_bbox_iou": 0.9879683406672297
+    },
+    {
+      "object_id": 1,
+      "points_in_3d": 1940,
+      "points_in_2d": 3761,
+      "tp": 1940,
+      "fp": 1821,
+      "fn": 0,
+      "precision": 0.5158202605689977,
+      "recall": 1.0,
+      "source_num_lidar_pts": 1900,
+      "recomputed_kitti_lidar_points": 1900,
+      "center_error_px": 5.44844846176636e-06,
+      "depth_error_m": 3.547084954647062e-07,
+      "projected_bbox": [
+        335.783058370862,
+        178.69011549395384,
+        624.5448197689615,
+        375.0
+      ],
+      "projected_bbox_iou": 0.980380169060659
+    },
+    {
+      "object_id": 2,
+      "points_in_3d": 878,
+      "points_in_2d": 1904,
+      "tp": 871,
+      "fp": 1033,
+      "fn": 7,
+      "precision": 0.4574579831932773,
+      "recall": 0.9920273348519362,
+      "source_num_lidar_pts": 881,
+      "recomputed_kitti_lidar_points": 881,
+      "center_error_px": 2.803878314864241e-05,
+      "depth_error_m": 3.1656152277292904e-07,
+      "projected_bbox": [
+        938.8093144611796,
+        195.86942796206094,
+        1242.0,
+        375.0
+      ],
+      "projected_bbox_iou": 0.9778458922212245
+    },
+    {
+      "object_id": 3,
+      "points_in_3d": 668,
+      "points_in_2d": 1127,
+      "tp": 668,
+      "fp": 459,
+      "fn": 0,
+      "precision": 0.5927240461401952,
+      "recall": 1.0,
+      "source_num_lidar_pts": 659,
+      "recomputed_kitti_lidar_points": 659,
+      "center_error_px": 8.697843024424222e-05,
+      "depth_error_m": 6.752597645487413e-07,
+      "projected_bbox": [
+        598.0678967121008,
+        176.35120042473784,
+        721.2785777077737,
+        262.63551523939844
+      ],
+      "projected_bbox_iou": 0.9740017462085421
+    },
+    {
+      "object_id": 4,
+      "points_in_3d": 53,
+      "points_in_2d": 91,
+      "tp": 53,
+      "fp": 38,
+      "fn": 0,
+      "precision": 0.5824175824175825,
+      "recall": 1.0,
+      "source_num_lidar_pts": 55,
+      "recomputed_kitti_lidar_points": 55,
+      "center_error_px": 2.0047078100984308e-05,
+      "depth_error_m": 1.4609707008617079e-06,
+      "projected_bbox": [
+        741.6706475479675,
+        169.3550315585611,
+        792.2887502422866,
+        208.91560853095123
+      ],
+      "projected_bbox_iou": 0.9648126354806893
+    },
+    {
+      "object_id": 5,
+      "points_in_3d": 164,
+      "points_in_2d": 344,
+      "tp": 164,
+      "fp": 179,
+      "fn": 0,
+      "precision": 0.478134110787172,
+      "recall": 1.0,
+      "source_num_lidar_pts": 162,
+      "recomputed_kitti_lidar_points": 162,
+      "center_error_px": 1.2095031697352242e-05,
+      "depth_error_m": 2.1749609402377246e-07,
+      "projected_bbox": [
+        885.375574880649,
+        178.2402751822824,
+        956.1167360780912,
+        240.94612760947086
+      ],
+      "projected_bbox_iou": 0.9711096331637186
+    }
+  ],
+  "limitations": [
+    "Single frame; reduced FOV cloud, not a full Velodyne scan",
+    "Projection agreement is internal consistency with source calibration, not independent calibration accuracy",
+    "3D cuboid membership is a geometric reference, not per-point semantic annotation",
+    "2D GT candidates are an oracle diagnostic, not detector or KITTI AP performance",
+    "GT projected 3D envelope and annotated 2D bbox need not coincide under occlusion/truncation"
+  ]
+}
